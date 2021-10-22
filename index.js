@@ -14,6 +14,13 @@ function main() {
   const { sumaMinima, sumaMaxima } = sumaMaximosMinimos( listaNumerosEjercicio2 );
   console.log(`Suma minima: ${ sumaMinima }  Suma máxima: ${ sumaMaxima }`);
   console.log('================================================');
+  console.log('');
+
+  console.log('================= Ejercicio #3 =================');
+  const edad = 4;
+  const velasASoplar = cuantasVelasSoplar( edad );
+  console.log(`Cuantas puede soplar: ${ velasASoplar }`)
+  console.log('================================================');
 }
 
 function contarNumerosParesRepetidos( listaNumeros ) {
@@ -23,8 +30,8 @@ function contarNumerosParesRepetidos( listaNumeros ) {
       const datosUnicos = new Set( listaNumeros );
       const listaLimpia = [...datosUnicos];
 
-      listaLimpia.forEach( (numero) => {
-        const coincidencias = listaNumeros.filter( (number) => number === numero);
+      listaLimpia.forEach( (numeroUnicoLista) => {
+        const coincidencias = listaNumeros.filter( (number) => number === numeroUnicoLista);
         const sizeArray = coincidencias.length;
 
         if ( coincidencias.length >= 2 ) {
@@ -46,13 +53,40 @@ function sumaMaximosMinimos( listaNumeros ) {
     const minimo = Math.min( ...listaNumeros );
     const maximo = Math.max( ...listaNumeros );
 
-    sumaMinima = listaNumeros.reduce( (acum, actual) => acum += actual !== minimo ? actual : 0, 0);
-    sumaMaxima = listaNumeros.reduce( (acum, actual) => acum += actual !== maximo ? actual : 0, 0);
+    sumaMinima = listaNumeros.reduce( (acum, actual) => acum += actual !== maximo ? actual : 0, 0);
+    sumaMaxima = listaNumeros.reduce( (acum, actual) => acum += actual !== minimo ? actual : 0, 0);
   } else {
     console.error('Ingrese una lista valida');
   }
 
   return { sumaMinima, sumaMaxima };
+}
+
+function cuantasVelasSoplar( edad ) {
+
+  let cantidadVelasSoplar = 0;
+
+  if ( isNaN( edad ) === false ) {
+    const velas = crearVelas( edad );
+    const velaMasGrande = Math.max( ...velas );
+    console.log(`Velas: ${ velas }`);
+    cantidadVelasSoplar = velas.reduce( (acum, actual) => acum += actual === velaMasGrande ? 1 : 0, 0);
+  } else {
+    console.error('No es una edad valida, intentalo nuevamente');
+  }
+
+  return cantidadVelasSoplar;
+}
+
+function crearVelas( velasMaximas ) {
+  const velas = [];
+
+  for( let i = 1; i <= velasMaximas; i++ ) {
+    const vela = Math.floor( Math.random() * velasMaximas + 1);
+    velas.push( vela );
+  }
+
+  return velas;
 }
 
 function esUnaListaNumericaValida( listado ) {
